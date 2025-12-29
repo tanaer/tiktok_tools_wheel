@@ -77,7 +77,6 @@ function App() {
                 >
                   {winner.text}
                 </div>
-                <div className="mt-2 text-white/50 text-sm">(点击关闭)</div>
               </div>
             </motion.div>
           )}
@@ -86,30 +85,30 @@ function App() {
 
       {/* Control Area: Spin Button & Settings Trigger */}
       <div className="flex flex-col items-center gap-4 mt-16 z-20">
-        <AnimatePresence>
-          {!isSpinning && (
-            <motion.button
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => spin()}
-              className={`
-                px-12 py-4 rounded-full text-2xl font-bold uppercase tracking-widest shadow-2xl transition-all
-                ${activeProfile.theme === 'cyberpunk' ? 'bg-cyan-500 hover:bg-cyan-400 text-black shadow-cyan-500/50' : ''}
-                ${activeProfile.theme === 'festive' ? 'bg-yellow-500 hover:bg-yellow-400 text-red-900 shadow-yellow-500/50 border-4 border-red-600' : ''}
-                ${activeProfile.theme === 'christmas' ? 'bg-red-600 hover:bg-red-500 text-white border-4 border-white border-dashed shadow-red-500/50' : ''}
-                ${activeProfile.theme === 'flat' ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-500/30' : ''}
-              `}
-              style={{ WebkitAppRegion: 'no-drag' } as any}
-            >
-              <span className="flex items-center gap-2">
-                <Play className="fill-current" /> 开始抽奖
-              </span>
-            </motion.button>
-          )}
-        </AnimatePresence>
+        <motion.button
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ 
+            opacity: isSpinning ? 0 : 1, 
+            scale: isSpinning ? 0.8 : 1,
+            pointerEvents: isSpinning ? 'none' : 'auto'
+          }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => spin()}
+          className={`
+            px-12 py-4 rounded-full text-2xl font-bold uppercase tracking-widest shadow-2xl transition-all
+            ${activeProfile.theme === 'cyberpunk' ? 'bg-cyan-500 hover:bg-cyan-400 text-black shadow-cyan-500/50' : ''}
+            ${activeProfile.theme === 'festive' ? 'bg-yellow-500 hover:bg-yellow-400 text-red-900 shadow-yellow-500/50 border-4 border-red-600' : ''}
+            ${activeProfile.theme === 'christmas' ? 'bg-red-600 hover:bg-red-500 text-white border-4 border-white border-dashed shadow-red-500/50' : ''}
+            ${activeProfile.theme === 'flat' ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-500/30' : ''}
+            ${activeProfile.theme === 'warm_gradient' ? 'bg-orange-400 hover:bg-orange-300 text-white shadow-orange-400/30' : ''}
+          `}
+          style={{ WebkitAppRegion: 'no-drag' } as any}
+        >
+          <span className="flex items-center gap-2">
+            <Play className="fill-current" /> 开始抽奖
+          </span>
+        </motion.button>
       </div>
 
       <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />

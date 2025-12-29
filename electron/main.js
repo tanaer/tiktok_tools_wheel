@@ -112,7 +112,7 @@ function buildTrayTemplate() {
       label: '窗口置顶开关', 
       type: 'checkbox', 
       checked: true, 
-      click: (menuItem) => { win && win.setAlwaysOnTop(menuItem.checked, 'screen-saver'); } 
+      click: (menuItem) => { win && win.setAlwaysOnTop(menuItem.checked, 'normal'); } 
     },
     { type: 'separator' },
     { 
@@ -208,7 +208,8 @@ function createWindow() {
   });
 
   // Always on top for live streaming overlay
-  win.setAlwaysOnTop(true, 'screen-saver');
+  // Use 'normal' level instead of 'screen-saver' to avoid potential system border issues
+  win.setAlwaysOnTop(true, 'normal');
 
   // In production, load the local index.html
   // In development, load the vite dev server
