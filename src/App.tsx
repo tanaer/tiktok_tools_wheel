@@ -3,7 +3,7 @@ import { Wheel } from '@/components/Wheel';
 import { SettingsModal } from '@/components/SettingsModal';
 import { useWheelLogic } from '@/hooks/useWheelLogic';
 import { useConfig } from '@/context/ConfigContext';
-import { Settings, Play } from 'lucide-react';
+import { Play } from 'lucide-react';
 import { ControlPanel } from '@/components/ControlPanel';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -110,23 +110,12 @@ function App() {
             </motion.button>
           )}
         </AnimatePresence>
-        
-        {/* Settings Button - Only show when not spinning */}
-        {!isSpinning && (
-          <button
-            onClick={() => setIsSettingsOpen(true)}
-            className="p-2 bg-gray-800/80 hover:bg-gray-700 rounded-full text-white/90 hover:text-white transition-colors backdrop-blur-sm shadow-lg"
-            style={{ WebkitAppRegion: 'no-drag' } as any}
-          >
-            <Settings className="w-6 h-6" />
-          </button>
-        )}
       </div>
 
       <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
       
       {/* Hidden Control Panel for Live Stream Control */}
-      <ControlPanel onSpin={spin} isSpinning={isSpinning} />
+      <ControlPanel onSpin={spin} isSpinning={isSpinning} onOpenSettings={() => setIsSettingsOpen(true)} />
     </div>
   );
 }

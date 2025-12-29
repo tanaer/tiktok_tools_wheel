@@ -5,9 +5,10 @@ import { Settings, Eye, EyeOff, Play, RefreshCw, Zap } from 'lucide-react';
 interface ControlPanelProps {
   onSpin: (options?: { targetId?: string; targetType?: string; excludeLast?: boolean; targetLast?: boolean }) => void;
   isSpinning: boolean;
+  onOpenSettings: () => void;
 }
 
-export const ControlPanel: React.FC<ControlPanelProps> = ({ onSpin, isSpinning }) => {
+export const ControlPanel: React.FC<ControlPanelProps> = ({ onSpin, isSpinning, onOpenSettings }) => {
   const { activeProfile } = useConfig();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -16,13 +17,21 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({ onSpin, isSpinning }
 
   if (!isOpen) {
     return (
-      <div className="fixed bottom-2 right-2 z-50 opacity-20 hover:opacity-100 transition-opacity" style={{ WebkitAppRegion: 'no-drag' } as any}>
+      <div className="fixed bottom-2 right-2 z-50 opacity-20 hover:opacity-100 transition-opacity flex gap-2" style={{ WebkitAppRegion: 'no-drag' } as any}>
+        <button
+          onClick={onOpenSettings}
+          disabled={isSpinning}
+          className="p-2 bg-gray-800 text-white rounded-full shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          title="Settings"
+        >
+          <Settings size={16} />
+        </button>
         <button
           onClick={() => setIsOpen(true)}
           className="p-2 bg-gray-800 text-white rounded-full shadow-lg"
           title="Open Controls"
         >
-          <Settings size={16} />
+          <EyeOff size={16} />
         </button>
       </div>
     );

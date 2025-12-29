@@ -109,25 +109,6 @@ function buildTrayTemplate() {
     },
     { type: 'separator' },
     { 
-      label: '复制 OBS 浏览器源地址', 
-      click: () => {
-        if (!obsServerUrl) {
-          startObsServer();
-          setTimeout(() => {
-            if (obsServerUrl) {
-              clipboard.writeText(obsServerUrl);
-              dialog.showMessageBox({ message: `已复制：${obsServerUrl}\n在 OBS 添加“浏览器源”并粘贴此地址即可。`, type: 'info' });
-            } else {
-              dialog.showErrorBox('错误', 'OBS 地址生成失败，请稍后重试。');
-            }
-          }, 300);
-        } else {
-          clipboard.writeText(obsServerUrl);
-          dialog.showMessageBox({ message: `已复制：${obsServerUrl}\n在 OBS 添加“浏览器源”并粘贴此地址即可。`, type: 'info' });
-        }
-      } 
-    },
-    { 
       label: '窗口置顶开关', 
       type: 'checkbox', 
       checked: true, 
@@ -289,61 +270,11 @@ function createWindow() {
   });
 }
 
+/*
 function startObsServer() {
-  if (obsServer) return;
-  try {
-    const distDir = path.join(__dirname, '../dist');
-    const mime = {
-      '.html': 'text/html; charset=utf-8',
-      '.js': 'application/javascript',
-      '.css': 'text/css',
-      '.svg': 'image/svg+xml',
-      '.png': 'image/png',
-      '.jpg': 'image/jpeg',
-      '.jpeg': 'image/jpeg',
-      '.ico': 'image/x-icon',
-      '.json': 'application/json',
-      '.map': 'application/json',
-      '.txt': 'text/plain; charset=utf-8',
-    };
-    obsServer = createServer((req, res) => {
-      try {
-        const urlPath = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
-        const safePath = urlPath.replace(/\\/g, '/').replace(/^\//, '');
-        const filePath = path.join(distDir, safePath || 'index.html');
-        const ext = path.extname(filePath);
-        const type = mime[ext] || 'application/octet-stream';
-
-        if (!filePath.startsWith(distDir)) {
-          res.statusCode = 403;
-          res.end('Forbidden');
-          return;
-        }
-        if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
-          res.setHeader('Content-Type', type);
-          res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-          fs.createReadStream(filePath).pipe(res);
-        } else {
-          // Fallback to index.html for SPA
-          const indexPath = path.join(distDir, 'index.html');
-          res.setHeader('Content-Type', mime['.html']);
-          fs.createReadStream(indexPath).pipe(res);
-        }
-      } catch (err) {
-        log(`OBS server error: ${err}`);
-        res.statusCode = 500;
-        res.end('Server error');
-      }
-    });
-    obsServer.listen(0, '127.0.0.1', () => {
-      const address = obsServer.address();
-      obsServerUrl = `http://${address.address}:${address.port}/`;
-      log(`OBS server started at ${obsServerUrl}`);
-    });
-  } catch (error) {
-    log(`Failed to start OBS server: ${error}`);
-  }
+  // OBS server functionality removed
 }
+*/
 
 function createTray() {
   log('Creating tray...');
@@ -421,7 +352,7 @@ app.whenReady().then(() => {
   } catch {}
   createWindow();
   createTray();
-  startObsServer();
+  // startObsServer(); // Removed OBS server
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -442,5 +373,10 @@ app.on('window-all-closed', () => {
 });
 
 // --- IPC Handlers for Config ---
+
+ipcMain.handle('quit-app', () => {
+  app.isQuitting = true;
+  app.quit();
+});
 
 // Handlers are already registered above; do not re-register here to avoid duplicate handler error.

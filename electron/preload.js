@@ -13,5 +13,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     const handler = (_e, enabled) => cb && cb(enabled);
     ipcRenderer.on('tray-toggle-sound', handler);
     return () => ipcRenderer.removeListener('tray-toggle-sound', handler);
-  }
+  },
+  quitApp: () => ipcRenderer.invoke('quit-app')
 });

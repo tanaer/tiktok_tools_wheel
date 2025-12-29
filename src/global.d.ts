@@ -6,6 +6,7 @@ declare global {
       onTraySpin: (callback: () => void) => () => void;
       readConfig: () => Promise<any>;
       writeConfig: (config: any) => Promise<void>;
+      quitApp?: () => void;
     };
   }
 }

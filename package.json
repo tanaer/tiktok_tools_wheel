@@ -49,6 +49,7 @@
   "description": "A transparent lucky wheel overlay for live streaming",
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.17",
+    "@tanaer/jsauth": "github:tanaer/jsauth",
     "@types/canvas-confetti": "^1.9.0",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
