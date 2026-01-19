@@ -1,6 +1,8 @@
 # 🎮 直播转盘 (Live Stream Lucky Wheel)
 
 一个专为直播场景设计的透明转盘抽奖工具，支持 OBS 叠加、防窥控制和多种主题。
+<img width="743" height="755" alt="image" src="https://github.com/user-attachments/assets/38e62f61-7cca-46a1-af82-06f427a91ced" />
+<img width="794" height="814" alt="260119220821140" src="https://github.com/user-attachments/assets/5b964264-77a9-4f32-8457-ef23b5388344" />
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Electron](https://img.shields.io/badge/Electron-v34-blue)
